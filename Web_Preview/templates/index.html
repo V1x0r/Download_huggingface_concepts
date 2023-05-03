@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Models List</title>
+	<link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+	<h1>Models List</h1>
+	<table>
+		<tr>
+			<th>Model Name</th>
+			<th>Token</th>
+			<th>Type of Concept</th>
+			<th>Preview</th>
+			<th>Images</th>
+		</tr>
+		{% for model in models %}
+			<tr>
+				<td>{{ model.name }}</td>
+				<td>{{ model.token }}</td>
+				<td>{{ model.type }}</td>
+				<td>
+					{% if model.preview %}
+						<a href="{{ url_for('send_image', path=model.preview) }}" target="_blank">
+							<img src="{{ url_for('send_image', path=model.preview) }}" width="200" height="200">
+						</a>
+					{% else %}
+						No preview available.
+					{% endif %}
+				</td>
+				<td>
+					{% for image in model.previews[:5] %}
+						<a href="{{ url_for('send_image', path=image) }}" target="_blank">
+							 <img src="{{ url_for('send_image', path=image) }}" width="80" height="80">
+						</a>
+					{% endfor %}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+</body>
+</html>
